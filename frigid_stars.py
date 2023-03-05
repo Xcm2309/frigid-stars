@@ -1,8 +1,8 @@
 import argparse
 import glob
 from pathlib import Path
-import random
 from PIL import Image, ImageOps
+import random
 
 def get_samples(sample_names):
     '''Returns a list of images opened from sample_names'''
@@ -48,8 +48,8 @@ def main():
     parser = argparse.ArgumentParser(description='Generate a frigid stars image')
     parser.add_argument('-i', '--invert', action='store_true', help='Invert the image color')
     parser.add_argument('-n', '--num-samples', type=int, help='The number of samples to place in the output', default=2000)
-    parser.add_argument('-o', '--output', help='Path of generated output', default='generated.png')
-    parser.add_argument('-s', '--samples', help='Path of samples', default='samples')
+    parser.add_argument('-o', '--output', type=str, help='Path of generated output', default='generated.png')
+    parser.add_argument('-s', '--samples', type=str, help='Path of samples', default='samples')
     parser.add_argument('-x', '--width', type=int, help='Width of generated output', default=1920)
     parser.add_argument('-y', '--height', type=int, help='Height of generated output', default=1080)
     args = parser.parse_args()
