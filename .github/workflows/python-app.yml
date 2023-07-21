@@ -44,4 +44,3 @@ jobs:
         name: generated
         path: |
           generated1.png
-          generated2.png
