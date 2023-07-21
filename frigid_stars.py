@@ -4,6 +4,7 @@ from pathlib import Path
 from PIL import Image, ImageOps
 import random
 
+
 def get_samples(sample_names):
     '''Returns a list of images opened from sample_names'''
     samples = []
@@ -12,13 +13,16 @@ def get_samples(sample_names):
         samples.append(sample)
     return samples
 
+
 def is_darker(pixel1, pixel2):
     '''Returns True if pixel1 is darker than pixel2.'''
-    return sum(pixel1) < sum(pixel2)
+    return sum(pixel1[:3]) < sum(pixel2[:3])
+
 
 def pixel_within_bounds(position, image):
     '''Returns True if position is within the bounds of image.'''
     return position[0] >= 0 and position[0] < image.width and position[1] >= 0 and position[1] < image.height
+
 
 def place_sample(image, sample, position):
     '''Places sample onto image at position.
@@ -36,6 +40,7 @@ def place_sample(image, sample, position):
                 if is_darker(sample_pixel, image_pixel):
                     image.putpixel(image_position, sample_pixel)
 
+
 def get_random_position(image):
     '''Returns a random position in the given image to place a sample.
 
@@ -43,6 +48,7 @@ def get_random_position(image):
     of scratch space is given to create a more natural looking generated image.
     '''
     return (random.randint(-50, image.width + -1), random.randint(-50, image.height - 1))
+
 
 def main():
     parser = argparse.ArgumentParser(description='Generate a frigid stars image')
@@ -70,6 +76,7 @@ def main():
         output = ImageOps.invert(output)
 
     output.save(args.output)
+
 
 if __name__ == '__main__':
     main()
