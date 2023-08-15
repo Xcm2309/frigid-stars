@@ -36,11 +36,12 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Generate an Image
       run: |
-        python frigid_stars.py --width 480 --height 640 --num-samples 500 -o generated1.png
-        python frigid_stars.py --width 480 --height 640 --num-samples 500 -o generated2.png -i
+        python frigid_stars.py --width 640 --height 480 --num-samples 500 -o generated1.png
+        python frigid_stars.py --width 640 --height 480 --num-samples 500 -o generated2.png -i
     - name: Archive images
       uses: actions/upload-artifact@v3
       with:
         name: generated
         path: |
           generated1.png
+          generated2.png

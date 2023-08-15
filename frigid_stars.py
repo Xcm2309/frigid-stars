@@ -1,7 +1,7 @@
 import argparse
 import glob
 from pathlib import Path
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageFilter
 import random
 
 
@@ -58,6 +58,7 @@ def main():
     parser.add_argument('-s', '--samples', type=str, help='Path of samples', default='samples')
     parser.add_argument('-x', '--width', type=int, help='Width of generated output', default=1920)
     parser.add_argument('-y', '--height', type=int, help='Height of generated output', default=1080)
+    parser.add_argument('--smooth', action='store_true', help='Smooth the output iamge')
     args = parser.parse_args()
 
     samples_dir = Path(args.samples)
@@ -74,6 +75,9 @@ def main():
 
     if args.invert:
         output = ImageOps.invert(output)
+
+    if args.smooth:
+        output = output.filter(ImageFilter.SMOOTH)
 
     output.save(args.output)
 
