@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import argparse
 import glob
 from pathlib import Path
@@ -5,7 +7,7 @@ from PIL import Image, ImageOps, ImageFilter
 import random
 
 
-def get_samples(sample_names):
+def get_samples(sample_names: Path) -> list[Image.Image]:
     '''Returns a list of images opened from sample_names'''
     samples = []
     for sample_name in sample_names:
@@ -14,17 +16,17 @@ def get_samples(sample_names):
     return samples
 
 
-def is_darker(pixel1, pixel2):
+def is_darker(pixel1: tuple, pixel2: tuple) -> bool:
     '''Returns True if pixel1 is darker than pixel2.'''
     return sum(pixel1[:3]) < sum(pixel2[:3])
 
 
-def pixel_within_bounds(position, image):
+def pixel_within_bounds(position: tuple, image: Image.Image) -> bool:
     '''Returns True if position is within the bounds of image.'''
     return position[0] >= 0 and position[0] < image.width and position[1] >= 0 and position[1] < image.height
 
 
-def place_sample(image, sample, position):
+def place_sample(image: Image.Image, sample, position: tuple) -> None:
     '''Places sample onto image at position.
 
     This function will only write a pixel of sample to image if the sample pixel
@@ -41,7 +43,7 @@ def place_sample(image, sample, position):
                     image.putpixel(image_position, sample_pixel)
 
 
-def get_random_position(image):
+def get_random_position(image: Image.Image) -> tuple:
     '''Returns a random position in the given image to place a sample.
 
     The top left corner of the sample is placed at the position so 50 pixels
@@ -58,7 +60,7 @@ def main():
     parser.add_argument('-s', '--samples', type=str, help='Path of samples', default='samples')
     parser.add_argument('-x', '--width', type=int, help='Width of generated output', default=1920)
     parser.add_argument('-y', '--height', type=int, help='Height of generated output', default=1080)
-    parser.add_argument('--smooth', action='store_true', help='Smooth the output iamge')
+    parser.add_argument('--smooth', action='store_true', help='Smooth the output image')
     args = parser.parse_args()
 
     samples_dir = Path(args.samples)
